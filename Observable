@@ -1,0 +1,61 @@
+package application;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
+public class Main {
+
+	public static void main(String[] args) {
+		List<String> list = new ArrayList<String>();
+
+		ObservableList<String> obs = FXCollections.observableList(list);
+		obs.addListener(new ListChangeListener() {
+			@Override
+			public void onChanged(ListChangeListener.Change change) {
+				System.out.println("\nDie Größe ist nun " + obs.size());
+
+			}
+		});
+
+		obs.addListener((ListChangeListener) (e -> {
+			// System.out.println(e);
+			while (e.next()) {
+				System.out.println(e);
+				if (e.wasAdded()) {
+					System.out.println("Es wurde etwas hinzugefügt");
+					System.out.println("Hinzugefügt wurden " +e.getAddedSize()+" Elemente");
+					System.out.println("Hinzugefügt wurde "+e.getAddedSubList());
+				}
+				if (e.wasRemoved()) {
+					System.out.println("Ein Objekt wurde gelöscht");
+					System.out.println("Entfernt wurde : " + e.getRemoved());
+					System.out.println("Entfernt wurde : " + e.getRemovedSize());
+				}
+			}
+
+		}));
+
+		String[] stringarray = { "X", "X", "X" };
+
+		for (int i = 0; i < 10; i++) {
+			obs.add(Integer.toString(i));
+			obs.addAll(Arrays.toString(stringarray), Arrays.toString(stringarray), Arrays.toString(stringarray));
+
+		}
+		for (String z : obs) {
+			System.out.println(z);
+
+		}
+
+		while (!obs.isEmpty()) {
+			obs.remove(0);
+		}
+
+		System.out.println("Daten wurden gelöscht die Größe sollte 0 sein " + obs.size());
+		
+	}
+}

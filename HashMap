@@ -1,0 +1,121 @@
+package application;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
+import javafx.collections.ObservableMap;
+
+public class Test {
+
+	// Impelemntieren eines Telefonsbuchs mit 10 Namen
+	// Telefonummen Kein String. Suchen sie einen geeigneten Datentyp!
+	 static Map<String, Integer> telefonbuch = new HashMap<String, Integer>();
+
+	public static void main(String[] args) {
+
+
+		ObservableMap<String, Integer> obsTelefonbuch = FXCollections.observableMap(telefonbuch);
+
+Map<String, String> map = new HashMap<String, String>(); // "Datenspeicher
+																	// in dem
+																	// die Daten
+																	// liegen
+ObservableMap<String, String> observableMap = FXCollections.observableMap(map); // Fügt
+																						// die
+																						// Beobaachtbarkeit
+																						// hinzu
+		observableMap.addListener(new MapChangeListener() {
+		@Override
+		public void onChanged(MapChangeListener.Change change) {
+			System.out.println("change! ");
+			}
+	});
+
+		 observableMap.addListener((MapChangeListener)(e->{
+		System.out.println("lambda");
+		 }));
+
+		observableMap.put("key 1", "value 1");
+		map.put("key 2", "value 2");
+
+
+
+		obsTelefonbuch.addListener((MapChangeListener) e -> {
+			System.out.println(e);
+	});
+
+		obsTelefonbuch.put("Dennis", 01);
+		obsTelefonbuch.put("Louisa", 02);
+		obsTelefonbuch.put("Michael", 03);
+		obsTelefonbuch.put("Manuel", 04);
+		obsTelefonbuch.put("Hans", 05);
+		obsTelefonbuch.put("Filip", 06);
+		obsTelefonbuch.put("Susanne", 07);
+		obsTelefonbuch.put("Tabea", 8);
+		obsTelefonbuch.put("Benedikt", 9);
+		obsTelefonbuch.put("Verena", 10);
+
+//		System.out.println(telefonbuch.get("Verena"));
+//		System.out.println(telefonbuch.get("Tabea"));
+//		nachschlagen("Manuel");
+//		System.out.println(telefonbuch.toString());
+
+		Stopwatch s = new Stopwatch();
+		Stopwatch t = new Stopwatch();
+
+
+
+		String [] [] testArray = new String [10000][2];
+
+		Map <String,String> testHashmap=new HashMap <String,String>();
+
+		//Füllen array
+		for (int i=0;i<testArray.length;i++){
+			testArray[i][0]=Integer.toString(i);
+			testArray[i][1]=Integer.toString(i);
+
+		}
+
+		//Füllen Hashmap
+		for (int i=0;i<10000;i++){
+			testHashmap.put(Integer.toString(i), Integer.toString(i));
+
+		}
+
+		s.start();
+		for (int i=0;i<testArray.length;i++){
+			if (testArray[i][0].equals("9999")){
+				System.out.println("In Array gefunden");
+			}
+
+		}
+		s.stop();
+		System.out.println(s);
+
+		s.start();
+		if (testHashmap.containsKey("9999")){
+			System.out.println("in hashMap gefunden");
+		}
+
+
+		s.stop();
+		System.out.println(s);
+
+
+	}
+
+	static void nachschlagen(String _name) {
+		System.out.println("Die Telefonummer von " + _name+" ist "+ telefonbuch.get(_name));
+
+	}
+	static int nachschlagenToInt(String _name) {
+		return telefonbuch.get(_name);
+
+	}
+
+
+}

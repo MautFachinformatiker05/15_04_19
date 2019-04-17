@@ -1,0 +1,30 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+
+public class CopyFile {
+
+	public static void main(String[] args) {
+		File inFile = new File("C:\\Test\\TestJava.txt");
+		File outFile = new File("C:\\Test\\Testwrite.txt");
+		FileInputStream fisIn = null;
+		FileOutputStream fisOut = null;
+		int swapbyte = 0;
+		try {
+			fisOut = new FileOutputStream(outFile);
+			fisIn = new FileInputStream(inFile);
+			if (!outFile.exists()) {
+				outFile.createNewFile();
+			}
+
+			while ((swapbyte = fisIn.read()) != -1) {
+				fisOut.write((byte) swapbyte);
+
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+	}
+
+}

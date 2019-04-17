@@ -1,0 +1,45 @@
+package application;
+
+import java.io.File;
+import java.io.FileInputStream;
+
+public class ReadTextFile {
+	public static void main(String[] args) {
+
+
+		File file = new File("Z:\\____Oppitz\\Manuel\\Test\\TestJava.txtXXXX");
+		// File file1 = new File("Z:/____Oppitz/Manuel/Test/TestJava.txt");
+
+		FileInputStream fis = null;
+
+		String text = "";
+		try {
+
+			int hiByte, lowByte;
+
+			fis = new FileInputStream(file);
+			// fis.skip(2);
+
+			while ((hiByte = fis.read()) != -1) {
+				lowByte = fis.read();
+				char c = (char) ( (hiByte << 8) | lowByte );
+				// System.out.println("Wert =" + (int)c + " Char = '" + c + "'");
+				text = text + c;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			try {
+				fis.close();  // Welche Exception wird hier geworfen?
+			} catch (Exception e) {
+				System.out.println("Schließen des Files fehlgeschlagen: " + e);
+				e.printStackTrace();
+			}
+		}
+
+		// System.out.println(text);
+
+	}
+
+}
